@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shop List"),
+        title: const Center(child: Text("Lista de la Compra")),
       ),
       body: const _HomeView(),
       floatingActionButton: const _FabAdd(),
@@ -46,12 +46,12 @@ class _CardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(),
-        color: getColor(item.category),
+        color: Colors.white
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,13 +60,10 @@ class _CardItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.nameProduct),
-              const SizedBox(height: 4),
-              Text("${item.quantity}"),
-              
             ],
           ),
           GestureDetector(
-            child: const Icon(Icons.delete_forever_outlined),
+            child: const Icon(Icons.delete_forever),
             onTap: () => context.read<ItemProvider>().deleteItem(item),
           )
         ],
@@ -74,18 +71,7 @@ class _CardItem extends StatelessWidget {
     );
   }
   
-  getColor(String category) { 
 
-    switch (category){
-      case "Vegetal": return Colors.green.shade200.withOpacity(0.6);
-      case "Fruta": return Colors.red.shade200.withOpacity(0.6);
-      case "Carne": return const Color(0xFFFFE9D1).withOpacity(0.6);
-      case "Pescado": return const Color(0xFF3E5F8A).withOpacity(0.6);
-      case "Lácteo": return const Color(0xFFF4F5F0).withOpacity(0.6);
-      case "Otros": return Colors.grey.withOpacity(0.6);
-    }
-
-  }
 
 }
 

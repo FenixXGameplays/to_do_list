@@ -47,16 +47,6 @@ class AddItem extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              CustoTextFormField(
-                keyboardType: TextInputType.number,
-                label: 'Cantidad',
-                validator: (value) {
-                  if (value!.isEmpty) return "Este campo no puede estar vacío";
-                  quantity = int.parse(value);
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
               DropdownButtonFormField(
                 value: optionList[0],
                 items: optionList.map<DropdownMenuItem<String>>((String value) {
@@ -79,7 +69,6 @@ class AddItem extends StatelessWidget {
         if (valid) {
           final item = Item(
               nameProduct: nameProduct,
-              quantity: quantity,
               category: categorySelected);
           context.read<ItemProvider>().addItem(item);
           context.pop();
@@ -117,7 +106,6 @@ class _AddItem extends StatelessWidget {
         if (valid) {
           final item = Item(
               nameProduct: nameProduct,
-              quantity: quantity,
               category: categorySelected);
           context.read<ItemProvider>().addItem(item);
           context.pop();

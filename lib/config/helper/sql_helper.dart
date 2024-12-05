@@ -8,7 +8,7 @@ class SqlHelper {
     return openDatabase(join(await getDatabasesPath(), 'listacompra.db'),
         onCreate: (db, version) {
       return db.execute(
-          "CREATE TABLE IF NOT EXISTS productos (nombreProducto TEXT, cantidad INTEGER, categoria TEXT)");
+          "CREATE TABLE IF NOT EXISTS productos (nombreProducto TEXT, categoria TEXT)");
     }, version: 1);
   }
 
