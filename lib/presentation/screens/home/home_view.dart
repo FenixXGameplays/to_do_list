@@ -26,6 +26,7 @@ class _HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ItemProvider>();
+    provider.addAll();
     return provider.list.isEmpty
         ? const Center(child: Text("Shop Cart Empty"))
         : ListView.builder(
@@ -50,7 +51,7 @@ class _CardItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(),
-        color: Colors.red.shade200.withOpacity(0.6),
+        color: getColor(item.category),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +62,7 @@ class _CardItem extends StatelessWidget {
               Text(item.nameProduct),
               const SizedBox(height: 4),
               Text("${item.quantity}"),
-              Text(item.category),
+              
             ],
           ),
           GestureDetector(
@@ -72,6 +73,20 @@ class _CardItem extends StatelessWidget {
       ),
     );
   }
+  
+  getColor(String category) { 
+
+    switch (category){
+      case "Vegetal": return Colors.green.shade200.withOpacity(0.6);
+      case "Fruta": return Colors.red.shade200.withOpacity(0.6);
+      case "Carne": return const Color(0xFFFFE9D1).withOpacity(0.6);
+      case "Pescado": return const Color(0xFF3E5F8A).withOpacity(0.6);
+      case "Lácteo": return const Color(0xFFF4F5F0).withOpacity(0.6);
+      case "Otros": return Colors.grey.withOpacity(0.6);
+    }
+
+  }
+
 }
 
 class _FabAdd extends StatelessWidget {

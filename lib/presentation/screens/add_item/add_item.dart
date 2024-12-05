@@ -6,27 +6,29 @@ import 'package:to_do_list/infrastucture/providers/item_provider.dart';
 
 import '../../widgets/widgets.dart';
 
+    String nameProduct = "";
+    int quantity = 0;
+    String categorySelected = "";
+
 class AddItem extends StatelessWidget {
   const AddItem({super.key});
 
   @override
   Widget build(BuildContext context) {
     final formkey = GlobalKey<FormState>();
-    String nameProduct = "";
-    int quantity = 0;
-    String categorySelected = "";
+
     final optionList = [
-      "Select Category",
-      "Vegetable",
-      "Meat",
-      "Fish",
-      "Fruit",
-      "Lacteo",
+      "Selecciona Categoría",
+      "Vegetal",
+      "Carne",
+      "Pescado",
+      "Fruta",
+      "Lácteo",
       "Otros"
     ];
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Item"),
+        title: const Text("Añadir Producto"),
       ),
       body: Form(
         key: formkey,
@@ -36,10 +38,10 @@ class AddItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CustoTextFormField(
-                label: 'Name of Product',
+                label: 'Producto',
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value!.isEmpty) return "This Field can't be empty";
+                  if (value!.isEmpty) return "Este campo no puede estar vacío";
                   nameProduct = value;
                   return null;
                 },
@@ -47,9 +49,9 @@ class AddItem extends StatelessWidget {
               const SizedBox(height: 24),
               CustoTextFormField(
                 keyboardType: TextInputType.number,
-                label: 'Quantity',
+                label: 'Cantidad',
                 validator: (value) {
-                  if (value!.isEmpty) return "Fill how many you need to buy";
+                  if (value!.isEmpty) return "Este campo no puede estar vacío";
                   quantity = int.parse(value);
                   return null;
                 },
@@ -64,17 +66,28 @@ class AddItem extends StatelessWidget {
                   );
                 }).toList(),
                 validator: (value) {
-                  if (value!.isEmpty || value == optionList[0]) return "Select the Category";
+                  if (value!.isEmpty || value == optionList[0]) return "Selecciona una categoría";
                   categorySelected = value;
                   return null;
                 },
                 onChanged: (String? value) {},
               ),
-              _AddItem(
-                  formkey: formkey,
-                  nameProduct: nameProduct,
-                  quantity: quantity,
-                  categorySelected: categorySelected),
+              
+              FilledButton.icon(
+      onPressed: () {
+        final valid = formkey.currentState!.validate();
+        if (valid) {
+          final item = Item(
+              nameProduct: nameProduct,
+              quantity: quantity,
+              category: categorySelected);
+          context.read<ItemProvider>().addItem(item);
+          context.pop();
+        }
+      },
+      label: const Text("Añadir"),
+      icon: const Icon(Icons.add_shopping_cart),
+    ),
             ],
           ),
         ),
@@ -110,7 +123,7 @@ class _AddItem extends StatelessWidget {
           context.pop();
         }
       },
-      label: const Text("Add Item"),
+      label: const Text("Añadir"),
       icon: const Icon(Icons.add_shopping_cart),
     );
   }
